@@ -1,4 +1,11 @@
 # laravel-crud-generator
+```
+Currently  Under Testing, Production Version Release Soon 
+```
+### Installing
+```
+composer require devjpl/laravel-curd
+```
 
 ### Installing
 ```
