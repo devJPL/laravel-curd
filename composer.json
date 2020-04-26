@@ -2,22 +2,22 @@
     "name": "devJPL/laravel-curd",
     "type": "library",
     "description": "laravel CURD Generator",
-    "keywords": ["curd","laravel","jp","larvel-curd"],
-    "homepage": "",
+    "keywords": ["curd","laravel","jp","larvel-curd"],    
     "license": "MIT",
     "authors": [
         {
             "name": "Jeyaprakash",
-            "email": "jp85.dev@gmail.com",
-            "homepage": "",
-            "role": "Developer"
+            "email": "jp85.dev@gmail.com"           
         }
     ],
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "DevJPL\\Laravel-curd\\": "src/"
+            "CrudGenerator\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "php": ">=7",
+        "laravel/framework": ">=6"
+    },
 }
