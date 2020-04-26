@@ -19,5 +19,5 @@
     "require": {
         "php": ">=7",
         "laravel/framework": ">=6"
-    },
+    }
 }
