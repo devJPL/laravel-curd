@@ -1,19 +1,13 @@
-<<<<<<< HEAD
 # laravel-crud-generator
-
-[![Latest Stable Version](https://poser.pugx.org/kepex/laravel-crud-generator/v/stable)](https://packagist.org/packages/kepex/laravel-crud-generator) [![Total Downloads](https://poser.pugx.org/kepex/laravel-crud-generator/downloads)](https://packagist.org/packages/kepex/laravel-crud-generator) [![Latest Unstable Version](https://poser.pugx.org/kepex/laravel-crud-generator/v/unstable)](https://packagist.org/packages/kepex/laravel-crud-generator) [![License](https://poser.pugx.org/kepex/laravel-crud-generator/license)](https://packagist.org/packages/kepex/laravel-crud-generator)
-
-php artisan command to generate fully working crud with grid paginated server side only by having database tables
-
 
 ### Installing
 ```
-php composer.phar require kepex/laravel-crud-generator
+composer require devjpl/laravel-curd
 ```
 
 Add to config/app.php the following line to the 'providers' array:
 ```
-composer require devjpl/laravel-curd
+CrudGenerator\CrudGeneratorServiceProvider::class,
 ```
 
 
@@ -35,10 +29,3 @@ For more options
 ```
 php artisan help make:crud
 ```
-
-=======
-# laravel-curd
-
-This is currently Under Testing ...
-Production verson release soon 
->>>>>>> 4d633b61991f80818639dd028f451d42e2eb8bd3
