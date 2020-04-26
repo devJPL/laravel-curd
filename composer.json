@@ -1,0 +1,23 @@
+{
+    "name": "devJPL/laravel-curd",
+    "type": "library",
+    "description": "laravel CURD Generator",
+    "keywords": ["curd","laravel","jp","larvel-curd"],
+    "homepage": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyaprakash",
+            "email": "jp85.dev@gmail.com",
+            "homepage": "",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "DevJPL\\Laravel-curd\\": "src/"
+        }
+    },
+    "require": {}
+}
