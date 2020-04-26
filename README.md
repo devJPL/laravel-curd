@@ -7,12 +7,12 @@ php artisan command to generate fully working crud with grid paginated server si
 
 ### Installing
 ```
-php composer.phar require kepex/laravel-crud-generator
+composer require devjpl/laravel-curd
 ```
 
 Add to config/app.php the following line to the 'providers' array:
 ```
-composer require devjpl/laravel-curd
+CrudGenerator\CrudGeneratorServiceProvider::class,
 ```
 
 
