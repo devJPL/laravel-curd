@@ -7,6 +7,11 @@ Currently  Under Testing, Production Version Release Soon
 composer require devjpl/laravel-curd
 ```
 
+### Installing
+```
+composer require devjpl/laravel-curd
+```
+
 Add to config/app.php the following line to the 'providers' array:
 ```
 CrudGenerator\CrudGeneratorServiceProvider::class,

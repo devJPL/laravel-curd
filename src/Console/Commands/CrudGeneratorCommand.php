@@ -4,6 +4,7 @@ namespace CrudGenerator\Console\Commands;
 
 use Illuminate\Container\Container;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use DB;
 use Artisan;
 
@@ -59,10 +60,10 @@ class CrudGeneratorCommand extends Command
             
             foreach ($tables as $t) {
                 // Ignore tables with different prefix
-                if($prefix == '' || str_contains($t, $prefix)) { 
+                if($prefix == '' || Str::contains($t, $prefix)) { 
                     $t = strtolower(substr($t, strlen($prefix)));
-                    $toadd = ['modelname'=> str_singular($t), 'tablename'=>''];
-                    if(str_plural($toadd['modelname']) != $t) {
+                    $toadd = ['modelname'=> Str::singular($t), 'tablename'=>''];
+                    if(Str::plural($toadd['modelname']) != $t) {
                         $toadd['tablename'] = $t;
                     } 
                     $tocreate[] = $toadd;
@@ -102,7 +103,7 @@ class CrudGeneratorCommand extends Command
             $generator->prefix = $prefix;
             $generator->force = $this->option('force');
             $generator->layout = $this->option('master-layout');
-            $generator->controllerName = ucfirst(strtolower($custom_controller)) ?: str_plural($generator->modelName);
+            $generator->controllerName = ucfirst(strtolower($custom_controller)) ?: Str::plural($generator->modelName);
 
             $generator->Generate();
         }

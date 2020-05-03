@@ -4,6 +4,7 @@ namespace CrudGenerator;
 
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use DB;
 use Artisan;
 
@@ -30,20 +31,20 @@ class CrudGeneratorService
   
     public function Generate() 
     {
-        $modelname = ucfirst(str_singular($this->modelName));
+        $modelname = ucfirst(Str::singular($this->modelName));
         $this->viewFolderName = strtolower($this->controllerName);
 
         $this->output->info('');
-        $this->output->info('Creating catalogue for table: '.($this->tableName ?: strtolower(str_plural($this->modelName))));
+        $this->output->info('Creating catalogue for table: '.($this->tableName ?: strtolower(Str::plural($this->modelName))));
         $this->output->info('Model Name: '.$modelname);
 
 
         $options = [
             'model_uc' => $modelname,
-            'model_uc_plural' => str_plural($modelname),
+            'model_uc_plural' => Str::plural($modelname),
             'model_singular' => strtolower($modelname),
-            'model_plural' => strtolower(str_plural($modelname)),
-            'tablename' => $this->tableName ?: strtolower(str_plural($this->modelName)),
+            'model_plural' => strtolower(Str::plural($modelname)),
+            'tablename' => $this->tableName ?: strtolower(Str::plural($this->modelName)),
             'prefix' => $this->prefix,
             'custom_master' => $this->layout ?: 'crudgenerator::layouts.master',
             'controller_name' => $this->controllerName,
@@ -58,6 +59,7 @@ class CrudGeneratorService
             if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/add.blade.php')) { $this->output->info('Add view already exists, use --force to overwrite'); return; }
             if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/show.blade.php')) { $this->output->info('Show view already exists, use --force to overwrite'); return; }
             if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/index.blade.php')) { $this->output->info('Index view already exists, use --force to overwrite');  return; }
+            if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/edit.blade.php')) { $this->output->info('Index view already exists, use --force to overwrite');  return; }
         }
 
 
@@ -86,6 +88,10 @@ class CrudGeneratorService
         $filegenerator->path = base_path().'/resources/views/'.$this->viewFolderName.'/add.blade.php';
         $filegenerator->Generate();
 
+        $filegenerator->templateName = 'view.edit';
+        $filegenerator->path = base_path().'/resources/views/'.$this->viewFolderName.'/edit.blade.php';
+        $filegenerator->Generate();
+
         $filegenerator->templateName = 'view.show';
         $filegenerator->path = base_path().'/resources/views/'.$this->viewFolderName.'/show.blade.php';
         $filegenerator->Generate();
@@ -95,7 +101,7 @@ class CrudGeneratorService
         $filegenerator->Generate();
         //###############################################################################
 
-        $addroute = 'Route::get(\'/'.$this->viewFolderName.'/grid\', \''.$this->controllerName.'Controller@grid\');';
+        $addroute = 'Route::get(\'/'.$this->viewFolderName.'/viewdata\', \''.$this->controllerName.'Controller@viewdata\');';
         $this->appendToEndOfFile(base_path().'/routes/web.php', "\n".$addroute, 0, true);
         $this->output->info('Adding Route: '.$addroute );
 
@@ -137,9 +143,9 @@ class CrudGeneratorService
     }
 
     protected function getTypeFromDBType($dbtype) {
-        if(str_contains($dbtype, 'varchar')) { return 'text'; }
-        if(str_contains($dbtype, 'int') || str_contains($dbtype, 'float')) { return 'number'; }
-        if(str_contains($dbtype, 'date')) { return 'date'; }
+        if(Str::contains($dbtype, 'varchar')) { return 'text'; }
+        if(Str::contains($dbtype, 'int') || Str::contains($dbtype, 'float')) { return 'number'; }
+        if(Str::contains($dbtype, 'date')) { return 'date'; }
         return 'unknown';
     }
 
@@ -156,7 +162,7 @@ class CrudGeneratorService
         }
         
 
-        $columns = $this->getColumns($prefix.($table_name ?: strtolower(str_plural($modelname))));
+        $columns = $this->getColumns($prefix.($table_name ?: strtolower(Str::plural($modelname))));
 
         $cc = collect($columns);
 
@@ -171,12 +177,12 @@ class CrudGeneratorService
     protected function deletePreviousFiles($tablename, $existing_model) {
         $todelete = [
                 app_path().'/Http/Controllers/'.ucfirst($tablename).'Controller.php',
-                base_path().'/resources/views/'.str_plural($tablename).'/index.blade.php',
-                base_path().'/resources/views/'.str_plural($tablename).'/add.blade.php',
-                base_path().'/resources/views/'.str_plural($tablename).'/show.blade.php',
+                base_path().'/resources/views/'.Str::plural($tablename).'/index.blade.php',
+                base_path().'/resources/views/'.Str::plural($tablename).'/add.blade.php',
+                base_path().'/resources/views/'.Str::plural($tablename).'/show.blade.php',
             ];
         if(!$existing_model) {
-            $todelete[] = app_path().'/'.ucfirst(str_singular($tablename)).'.php'; 
+            $todelete[] = app_path().'/'.ucfirst(Str::singular($tablename)).'.php'; 
         }
         foreach($todelete as $path) {
             if(file_exists($path)) { 
@@ -188,7 +194,7 @@ class CrudGeneratorService
 
     protected function appendToEndOfFile($path, $text, $remove_last_chars = 0, $dont_add_if_exist = false) {
         $content = file_get_contents($path);
-        if(!str_contains($content, $text) || !$dont_add_if_exist) {
+        if(!Str::contains($content, $text) || !$dont_add_if_exist) {
             $newcontent = substr($content, 0, strlen($content)-$remove_last_chars).$text;
             file_put_contents($path, $newcontent);    
         }

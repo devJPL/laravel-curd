@@ -1,84 +1,47 @@
-@extends('[[custom_master]]')
+@extends('layouts.app')
+
+@section('title')
+<div class="row">
+    <div class="col">
+        <span class="page-title">[[model_uc]]</span> &#187; Create 
+    </div>   
+</div>
+@endsection
 
 @section('content')
 
 
-<h2 class="page-header">[[model_uc]]</h2>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        Add/Modify [[model_uc]]
-    </div>
-
-    <div class="panel-body">
-                
-        <form action="{{ url('/[[route_path]]'.( isset($model) ? "/" . $model->id : "")) }}" method="POST" class="form-horizontal">
+<div class="bvscard">
+    <div class="bvscard-body">        
+        <form action="{{ route('[[route_path]].store') }}" method="POST">
             {{ csrf_field() }}
 
-            @if (isset($model))
-                <input type="hidden" name="_method" value="PATCH">
-            @endif
-
-
             [[foreach:columns]]
-            [[if:i.type=='id']]
-            <div class="form-group">
-                <label for="[[i.name]]" class="col-sm-3 control-label">[[i.display]]</label>
-                <div class="col-sm-6">
-                    <input type="text" name="[[i.name]]" id="[[i.name]]" class="form-control" value="{{$model['[[i.name]]'] or ''}}" readonly="readonly">
-                </div>
-            </div>
-            [[endif]]
-            [[if:i.type=='text']]
-            <div class="form-group">
-                <label for="[[i.name]]" class="col-sm-3 control-label">[[i.display]]</label>
-                <div class="col-sm-6">
-                    <input type="text" name="[[i.name]]" id="[[i.name]]" class="form-control" value="{{$model['[[i.name]]'] or ''}}">
-                </div>
-            </div>
-            [[endif]]
-            [[if:i.type=='number']]
-            <div class="form-group">
-                <label for="[[i.name]]" class="col-sm-3 control-label">[[i.display]]</label>
-                <div class="col-sm-2">
-                    <input type="number" name="[[i.name]]" id="[[i.name]]" class="form-control" value="{{$model['[[i.name]]'] or ''}}">
-                </div>
-            </div>
-            [[endif]]
-            [[if:i.type=='date']]
-            <div class="form-group">
-                <label for="[[i.name]]" class="col-sm-3 control-label">[[i.display]]</label>
-                <div class="col-sm-3">
-                    <input type="date" name="[[i.name]]" id="[[i.name]]" class="form-control" value="{{$model['[[i.name]]'] or ''}}">
-                </div>
-            </div>
-            [[endif]]
-            [[if:i.type=='unknown']]
-            <div class="form-group">
-                <label for="[[i.name]]" class="col-sm-3 control-label">[[i.display]]</label>
-                <div class="col-sm-6">
-                    <input type="text" name="[[i.name]]" id="[[i.name]]" class="form-control" value="{{$model['[[i.name]]'] or ''}}">
-                </div>
+            [[if:i.type !='id']]  
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="[[i.name]]">[[i.display]]</label>
+                    <input type="text" name="[[i.name]]" id="[[i.name]]" class="form-control" value="">
+                </div>                
             </div>
             [[endif]]
             [[endforeach]]
 
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-6">
+            <div class="form-row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-plus"></i> Save
-                    </button> 
-                    <a class="btn btn-default" href="{{ url('/[[route_path]]') }}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                    </button>
                 </div>
-            </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <a class="btn btn-dark" href="{{ url('/[[route_path]]') }}"><i
+                            class="glyphicon glyphicon-chevron-left"></i> Back</a>
+                </div>
+            </div>           
         </form>
 
     </div>
 </div>
-
-
-
-
-
-
 @endsection
